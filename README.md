@@ -19,9 +19,9 @@ python publications_unique.py *args **kwargs
 - any number of filenames (full path)
 
 **kwargs:
-- last: fuzzy matching threshold for last name matching (0-100, default 100),
-- first_abb: fuzzy matching threshold for last name + first letter othe first name matching (0-100, default 92),
-- full: fuzzy matching threshold for full name matching (0-100, default 90)
+- last: fuzzy matching threshold for **last name** matching (0-100, default 100),
+- first_abb: fuzzy matching threshold for **first letter of the first name** + **middle names** + **last name** matching (0-100, default 92),
+- full: fuzzy matching threshold for **full name** matching (0-100, default 90)
 
 ## Documentation
 The script expects that the .csv file contains 'author' and 'affiliations' columns and is ignoring anythin else.
@@ -35,13 +35,13 @@ suggests such approach)
 The affiliations part is ignored after this part, as it appears to not be required in the output (even though task decription suggests otherwise).
 
 Three fuzzy-matching approaches are used to remove duplicates from the list of authors:
-1. Considering only on the last names,
-2. Considering the first letter of the first name, middle names and the last name,
-3. Considering the full name
+1. Considering only on the **last names**,
+2. Considering the **first letter of the first name**, **middle names** and the **last name**,
+3. Considering the **full name**.
 
 Each attempt has a customizable fuzzy score threshold to consider two strings matching.
-In order to finish te task in finite time, optimization through specific sorting of the data is done.
-First then last names are sorted and only consequent rows are compared. The rows are then grouped and the most common value within each matching group is used to replace all other values within the group (this is further fine tuned by specific mapping in the approach no. 3.).
+In order to finish te task in finite time, optimization by specific sorting of the data is done.
+First then last names are sorted and only consequent rows are compared. The rows are then grouped and the most common value within each matching group is used to replace all other values within the group (this is further fine tuned by series of specific mapping rules in the approach no. 3.).
 
 ## Shortcomings
 Dividing names into first, middle and last parts could be improved. The logic is:
@@ -51,10 +51,6 @@ Dividing names into first, middle and last parts could be improved. The logic is
 
 This approach fails when middle names are not abbreviated.
 
-Fuzzy matching can result in loss of information, by matching similar, but real last names, or male and female versions of a name (e.g. Alessandro and Alessandra). Further fine tuning or bether models could be utilized.
+Fuzzy matching can result in loss of information, by matching similar, but real last names, or male and female versions of a name (e.g. Alessandro and Alessandra). Further fine tuning or bether models (AI perhaps) could be utilized.
 
-
-
-
-A reporting of potential failure points and bottlenecks
-An accounting of the remaining steps needed before putting deploying your code to a production system
+It would be a good idea to run more tests on the script. Tests for unwanted outcomes (bugs), as well as for optimal parameters and their dependency on input data.
